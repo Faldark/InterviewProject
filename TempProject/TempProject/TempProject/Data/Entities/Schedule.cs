@@ -10,7 +10,7 @@ namespace TempProject.Data.Entities
     public class Schedule : BaseEntity<int>
     {
         public string ScheduledTime { get; set; }
-        
 
+        public User User { get; set; }
     }
 }

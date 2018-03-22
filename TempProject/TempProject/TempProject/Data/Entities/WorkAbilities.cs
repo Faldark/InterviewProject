@@ -11,6 +11,6 @@ namespace TempProject.Data.Entities
     {
         public string Abilities { get; set; }
 
-
+        public User User { get; set; }
     }
 }

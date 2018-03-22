@@ -10,6 +10,7 @@ namespace TempProject.Data.Entities
     public class Pricing : BaseEntity<int>
     {
         public int Price { get; set; }
-        
+
+        public User User { get; set; }
     }
 }

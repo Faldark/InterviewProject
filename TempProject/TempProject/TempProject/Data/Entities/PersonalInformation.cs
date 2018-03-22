@@ -16,8 +16,8 @@ namespace TempProject.Data.Entities
         public DateTime DetaOfBirth { get; set; }
         public string Telephone { get; set; }
         public string Address { get; set; }
-        
 
+        public User User { get; set; }
 
     }
 }

@@ -10,5 +10,7 @@ namespace TempProject.Data.Entities
     {
         public string AboutMe { get; set; }
         
+        public User User { get; set; }
+        
     }
 }

@@ -28,7 +28,11 @@ namespace TempProject.Migrations
 
                     b.Property<string>("AboutMe");
 
+                    b.Property<int?>("UserId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Abouts");
                 });
@@ -50,7 +54,11 @@ namespace TempProject.Migrations
 
                     b.Property<string>("Telephone");
 
+                    b.Property<int?>("UserId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("PersonalInformations");
                 });
@@ -62,7 +70,11 @@ namespace TempProject.Migrations
 
                     b.Property<int>("Price");
 
+                    b.Property<int?>("UserId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Pricings");
                 });
@@ -74,7 +86,11 @@ namespace TempProject.Migrations
 
                     b.Property<string>("ScheduledTime");
 
+                    b.Property<int?>("UserId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Schedules");
                 });
@@ -84,31 +100,11 @@ namespace TempProject.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("AboutId");
-
                     b.Property<string>("Email");
 
                     b.Property<string>("Password");
 
-                    b.Property<int?>("PersonalInformationId");
-
-                    b.Property<int?>("PricingId");
-
-                    b.Property<int?>("ScheduleId");
-
-                    b.Property<int?>("WorkAbilitiesId");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("AboutId");
-
-                    b.HasIndex("PersonalInformationId");
-
-                    b.HasIndex("PricingId");
-
-                    b.HasIndex("ScheduleId");
-
-                    b.HasIndex("WorkAbilitiesId");
 
                     b.ToTable("Users");
                 });
@@ -120,32 +116,48 @@ namespace TempProject.Migrations
 
                     b.Property<string>("Abilities");
 
+                    b.Property<int?>("UserId");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("WorkAbilities");
                 });
 
-            modelBuilder.Entity("TempProject.Data.Entities.User", b =>
+            modelBuilder.Entity("TempProject.Data.Entities.About", b =>
                 {
-                    b.HasOne("TempProject.Data.Entities.About", "About")
+                    b.HasOne("TempProject.Data.Entities.User", "User")
                         .WithMany()
-                        .HasForeignKey("AboutId");
+                        .HasForeignKey("UserId");
+                });
 
-                    b.HasOne("TempProject.Data.Entities.PersonalInformation", "PersonalInformation")
+            modelBuilder.Entity("TempProject.Data.Entities.PersonalInformation", b =>
+                {
+                    b.HasOne("TempProject.Data.Entities.User", "User")
                         .WithMany()
-                        .HasForeignKey("PersonalInformationId");
+                        .HasForeignKey("UserId");
+                });
 
-                    b.HasOne("TempProject.Data.Entities.Pricing", "Pricing")
+            modelBuilder.Entity("TempProject.Data.Entities.Pricing", b =>
+                {
+                    b.HasOne("TempProject.Data.Entities.User", "User")
                         .WithMany()
-                        .HasForeignKey("PricingId");
+                        .HasForeignKey("UserId");
+                });
 
-                    b.HasOne("TempProject.Data.Entities.Schedule", "Schedule")
+            modelBuilder.Entity("TempProject.Data.Entities.Schedule", b =>
+                {
+                    b.HasOne("TempProject.Data.Entities.User", "User")
                         .WithMany()
-                        .HasForeignKey("ScheduleId");
+                        .HasForeignKey("UserId");
+                });
 
-                    b.HasOne("TempProject.Data.Entities.WorkAbilities", "WorkAbilities")
+            modelBuilder.Entity("TempProject.Data.Entities.WorkAbilities", b =>
+                {
+                    b.HasOne("TempProject.Data.Entities.User", "User")
                         .WithMany()
-                        .HasForeignKey("WorkAbilitiesId");
+                        .HasForeignKey("UserId");
                 });
 #pragma warning restore 612, 618
         }

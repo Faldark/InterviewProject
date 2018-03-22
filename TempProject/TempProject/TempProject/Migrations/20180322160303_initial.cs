@@ -5,21 +5,42 @@ using System.Collections.Generic;
 
 namespace TempProject.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Email = table.Column<string>(nullable: true),
+                    Password = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Abouts",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    AboutMe = table.Column<string>(nullable: true)
+                    AboutMe = table.Column<string>(nullable: true),
+                    UserId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Abouts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Abouts_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -33,11 +54,18 @@ namespace TempProject.Migrations
                     FirstName = table.Column<string>(nullable: true),
                     Gender = table.Column<int>(nullable: false),
                     LastName = table.Column<string>(nullable: true),
-                    Telephone = table.Column<string>(nullable: true)
+                    Telephone = table.Column<string>(nullable: true),
+                    UserId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PersonalInformations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_PersonalInformations_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -46,11 +74,18 @@ namespace TempProject.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Price = table.Column<int>(nullable: false)
+                    Price = table.Column<int>(nullable: false),
+                    UserId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Pricings", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Pricings_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -59,11 +94,18 @@ namespace TempProject.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    ScheduledTime = table.Column<string>(nullable: true)
+                    ScheduledTime = table.Column<string>(nullable: true),
+                    UserId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Schedules", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Schedules_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -72,93 +114,48 @@ namespace TempProject.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Abilities = table.Column<string>(nullable: true)
+                    Abilities = table.Column<string>(nullable: true),
+                    UserId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_WorkAbilities", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Users",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    AboutId = table.Column<int>(nullable: true),
-                    Email = table.Column<string>(nullable: true),
-                    Password = table.Column<string>(nullable: true),
-                    PersonalInformationId = table.Column<int>(nullable: true),
-                    PricingId = table.Column<int>(nullable: true),
-                    ScheduleId = table.Column<int>(nullable: true),
-                    WorkAbilitiesId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Users_Abouts_AboutId",
-                        column: x => x.AboutId,
-                        principalTable: "Abouts",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Users_PersonalInformations_PersonalInformationId",
-                        column: x => x.PersonalInformationId,
-                        principalTable: "PersonalInformations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Users_Pricings_PricingId",
-                        column: x => x.PricingId,
-                        principalTable: "Pricings",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Users_Schedules_ScheduleId",
-                        column: x => x.ScheduleId,
-                        principalTable: "Schedules",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Users_WorkAbilities_WorkAbilitiesId",
-                        column: x => x.WorkAbilitiesId,
-                        principalTable: "WorkAbilities",
+                        name: "FK_WorkAbilities_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_AboutId",
-                table: "Users",
-                column: "AboutId");
+                name: "IX_Abouts_UserId",
+                table: "Abouts",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_PersonalInformationId",
-                table: "Users",
-                column: "PersonalInformationId");
+                name: "IX_PersonalInformations_UserId",
+                table: "PersonalInformations",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_PricingId",
-                table: "Users",
-                column: "PricingId");
+                name: "IX_Pricings_UserId",
+                table: "Pricings",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_ScheduleId",
-                table: "Users",
-                column: "ScheduleId");
+                name: "IX_Schedules_UserId",
+                table: "Schedules",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_WorkAbilitiesId",
-                table: "Users",
-                column: "WorkAbilitiesId");
+                name: "IX_WorkAbilities_UserId",
+                table: "WorkAbilities",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Users");
-
             migrationBuilder.DropTable(
                 name: "Abouts");
 
@@ -173,6 +170,9 @@ namespace TempProject.Migrations
 
             migrationBuilder.DropTable(
                 name: "WorkAbilities");
+
+            migrationBuilder.DropTable(
+                name: "Users");
         }
     }
 }
