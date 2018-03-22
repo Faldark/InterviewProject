@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using TempProject.Data.Abstract;
 using TempProject.Data.Entities.Abstract;
 
-namespace KanbanApp.DAL.MSSQL.Repositories
+namespace TempProject.Data.MSSQL.Repositories
 {
     public class BaseRepository<TKey, TEntity> : IRepository<TKey, TEntity>
         where TKey : IComparable
