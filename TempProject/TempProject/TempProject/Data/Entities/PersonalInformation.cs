@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using TempProject.Data.Entities.Abstract;
 using TempProject.Data.Enums;
 
 namespace TempProject.Data.Entities
 {
-    public class PersonalInformation : BaseEntity
+    public class PersonalInformation : BaseEntity<int>
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

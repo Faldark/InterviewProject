@@ -12,8 +12,8 @@ using TempProject.Data.MSSQL;
 namespace TempProject.Migrations
 {
     [DbContext(typeof(CareproDbContext))]
-    [Migration("20180322135700_initialcreate")]
-    partial class initialcreate
+    [Migration("20180322143354_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
